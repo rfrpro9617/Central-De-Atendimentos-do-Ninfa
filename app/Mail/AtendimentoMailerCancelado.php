@@ -1,0 +1,371 @@
+<?php
+
+class AtendimentoMailerCancelado
+{
+  private Mailer $mailer;
+
+  public function __construct(Mailer $mailer)
+  {
+    $this->mailer = $mailer;
+  }
+
+  public function enviarAtendimentoCancelado(
+    string $email,
+    array $atendimento,
+    string $mensagem
+  ): void {
+
+    Logger::info(
+      "Disparando fluxo de atendimento CANCELADO | Email: {$email} | Atendimento: " .
+        json_encode($atendimento, JSON_UNESCAPED_UNICODE)
+    );
+
+    $this->sendStatusNotification(
+      $email,
+      $atendimento,
+      $mensagem,
+      'Atendimento cancelado - #' . $atendimento['codigo'] . ' - NINFA',
+      'Cancelamento do atendimento',
+      'Seu atendimento foi cancelado.',
+      'Cancelado'
+    );
+  }
+
+  private function sendStatusNotification(
+    string $email,
+    array $atendimento,
+    string $mensagem,
+    string $subject,
+    string $heading,
+    string $statusAlert,
+    string $statusLabel
+  ): void {
+
+    try {
+
+      Logger::info(
+        "Montando template de email CANCELADO | Email: {$email} | Assunto: {$subject}"
+      );
+
+      $blocoMensagem = '';
+
+      if (!empty(trim($mensagem))) {
+
+        Logger::info(
+          "Mensagem de encerramento adicionada ao template | Atendimento: {$atendimento['codigo']}"
+        );
+
+        $blocoMensagem = "
+          <table
+            width='100%'
+            cellpadding='0'
+            cellspacing='0'
+            border='0'
+            style='
+              margin-bottom:24px;
+              background:#fef9c3;
+              border:1px solid #eab308;
+              border-radius:10px;
+            '
+          >
+
+            <tr>
+
+              <td style='padding:18px 20px;'>
+
+                <p style='
+                  margin:0 0 10px 0;
+                  color:#854d0e;
+                  font-size:14px;
+                  font-weight:bold;
+                '>
+                  Mensagem de encerramento:
+                </p>
+
+                <p style='
+                  margin:0;
+                  color:#713f12;
+                  font-size:14px;
+                  line-height:1.6;
+                '>
+
+                  " . nl2br(htmlspecialchars($mensagem)) . "
+
+                </p>
+
+              </td>
+
+            </tr>
+
+          </table>
+        ";
+      }
+
+      $message = "
+      <!DOCTYPE html>
+      <html lang='pt-BR'>
+
+      <head>
+        <meta charset='UTF-8'>
+        <title>{$heading}</title>
+      </head>
+
+      <body style='
+        margin:0;
+        padding:0;
+        background-color:#f3f4f6;
+        font-family:Arial, Helvetica, sans-serif;
+        color:#1f2937;
+      '>
+
+        <table
+          width='100%'
+          cellpadding='0'
+          cellspacing='0'
+          border='0'
+          style='background-color:#f3f4f6;padding:40px 0;'
+        >
+
+          <tr>
+            <td align='center'>
+
+              <table
+                width='650'
+                cellpadding='0'
+                cellspacing='0'
+                border='0'
+                style='
+                  background:#ffffff;
+                  border-radius:16px;
+                  overflow:hidden;
+                  border:1px solid #e5e7eb;
+                '
+              >
+
+                <!-- HEADER -->
+                <tr>
+                  <td
+                    style='
+                      background:#166534;
+                      padding:28px 32px;
+                    '
+                  >
+
+                    <h1 style='
+                      margin:0;
+                      color:#ffffff;
+                      font-size:28px;
+                      font-weight:bold;
+                    '>
+                      NINFA - Atendimento
+                    </h1>
+
+                    <p style='
+                      margin:8px 0 0 0;
+                      color:#dcfce7;
+                      font-size:14px;
+                    '>
+                      {$statusAlert}
+                    </p>
+
+                  </td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+
+                  <td style='padding:32px;'>
+
+                    <h2 style='
+                      margin-top:0;
+                      margin-bottom:24px;
+                      color:#111827;
+                      font-size:22px;
+                    '>
+                      {$heading}
+                    </h2>
+
+                    <!-- ALERTA DE STATUS -->
+                    <table
+                      width='100%'
+                      cellpadding='0'
+                      cellspacing='0'
+                      border='0'
+                      style='
+                        margin-bottom:24px;
+                        background:#ecfdf5;
+                        border:1px solid #16a34a;
+                        border-radius:10px;
+                      '
+                    >
+
+                      <tr>
+
+                        <td style='padding:18px 20px;'>
+
+                          <p style='
+                            margin:0;
+                            color:#166534;
+                            font-size:14px;
+                            font-weight:bold;
+                            line-height:1.6;
+                          '>
+
+                            {$statusAlert}
+
+                          </p>
+
+                        </td>
+
+                      </tr>
+
+                    </table>
+
+                    {$blocoMensagem}
+
+                    <!-- CARD -->
+                    <table
+                      width='100%'
+                      cellpadding='0'
+                      cellspacing='0'
+                      border='0'
+                      style='
+                        border:1px solid #e5e7eb;
+                        border-radius:12px;
+                        background:#f9fafb;
+                      '
+                    >
+
+                      <tr>
+                        <td style='padding:24px;'>
+
+                          <p style='margin:0 0 16px 0;font-size:15px;'>
+                            <strong>Código:</strong>
+                            {$atendimento['codigo']}
+                          </p>
+
+                          <p style='margin:0 0 16px 0;font-size:15px;'>
+                            <strong>Responsável:</strong>
+                            " . htmlspecialchars($atendimento['responsavel'] ?? 'Não informado') . "
+                          </p>
+
+                          <p style='margin:0 0 16px 0;font-size:15px;'>
+                            <strong>Status:</strong>
+                            {$statusLabel}
+                          </p>
+
+                          <p style='margin:0 0 16px 0;font-size:15px;'>
+                            <strong>Patrimônio:</strong>
+                            " . htmlspecialchars($atendimento['patrimonio'] ?? 'Não informado') . "
+                          </p>
+
+                          <p style='margin:0 0 16px 0;font-size:15px;'>
+                            <strong>Demanda:</strong>
+                            " . htmlspecialchars($atendimento['demanda'] ?? 'Não informado') . "
+                          </p>
+
+                          <div style='margin-top:24px;'>
+
+                            <p style='
+                              margin:0 0 10px 0;
+                              font-size:15px;
+                              font-weight:bold;
+                            '>
+                              Descrição do problema
+                            </p>
+
+                            <div style='
+                              background:#ffffff;
+                              border:1px solid #d1d5db;
+                              border-radius:10px;
+                              padding:16px;
+                              font-size:14px;
+                              line-height:1.7;
+                              color:#374151;
+                            '>
+
+                              " . nl2br(htmlspecialchars($atendimento['descricao'] ?? 'Sem descrição')) . "
+
+                            </div>
+
+                          </div>
+
+                        </td>
+                      </tr>
+
+                    </table>
+
+                  </td>
+
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+
+                  <td
+                    style='
+                      background:#f9fafb;
+                      border-top:1px solid #e5e7eb;
+                      padding:24px 32px;
+                    '
+                  >
+
+                    <p style='
+                      margin:0;
+                      font-size:13px;
+                      color:#6b7280;
+                      text-align:center;
+                    '>
+                      Sistema de Atendimento NINFA · Faculdade de Agronomia · UFRGS<br>
+                      <a href='https://www.ufrgs.br/fagroz/ninfa.php?page=home' style='color:#2563eb;text-decoration:underline;'>Acesse o site</a>
+                    </p>
+
+                  </td>
+
+                </tr>
+
+              </table>
+
+            </td>
+          </tr>
+
+        </table>
+
+      </body>
+      </html>
+      ";
+
+      Logger::info(
+        "Template CANCELADO montado com sucesso | Email: {$email} | Assunto: {$subject}"
+      );
+
+      $success = $this->mailer->send(
+        $email,
+        $subject,
+        $message
+      );
+
+      if (!$success) {
+
+        Logger::error(
+          "Falha ao enviar email CANCELADO | Email: {$email} | Assunto: {$subject}"
+        );
+
+        throw new Exception(
+          'Erro ao enviar email de status do atendimento'
+        );
+      }
+
+      Logger::info(
+        "Email CANCELADO enviado com sucesso | Email: {$email} | Assunto: {$subject}"
+      );
+    } catch (\Throwable $e) {
+
+      Logger::error(
+        "Exception no AtendimentoMailerCancelado | Erro: {$e->getMessage()}"
+      );
+
+      throw $e;
+    }
+  }
+}

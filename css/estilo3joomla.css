@@ -1,0 +1,318 @@
+#geral {
+  /*	position:relative;  */
+  /*	background-color: #F4F4F4;  */
+  /*	margin-left:-400px;   */
+  /*	left:51%;   */
+  top: 0px;
+  /*	width:770px;*/
+  width: 1000px;
+}
+
+#geral #topo {
+  width: 780px;
+  /*	width:770px;*/
+  height: 140px;
+  background-image: url(../images/topoFundo.jpg);
+  border-left-color: #000000;
+}
+#geral #menuSup {
+  background-image: url(../images/menuSupFundo2.jpg);
+  left: 0px;
+  /*	width:770px;*/
+  width: 1040px;
+  height: 18px;
+  z-index: 1000;
+}
+#sddm {
+  margin: 0;
+  padding: 0;
+  z-index: 30;
+}
+
+#sddm li {
+  /*	margin-left: -3px;*/
+  margin-left: -12px;
+  list-style: none;
+  float: left;
+  font: bold 11px verdana;
+  /*	width: 90px;*/
+  width: 89px;
+}
+#geral #menuSup #sddm li #m1 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 160px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  left: 83px;
+}
+#geral #menuSup #sddm li #m4 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 215px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  left: 396px;
+}
+
+#geral #menuSup #sddm li #m6 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 202px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  position: absolute;
+  /*	left:578px;*/
+  left: 542px;
+}
+#geral #menuSup #sddm li #m5 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 264px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  left: 467px;
+}
+
+/*#geral #menuSup #sddm li #m3*/
+#geral #menuSup #sddm li #m2 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 247px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  left: 195px;
+}
+#geral #menuSup #sddm li #m7 {
+  background-image: url(../images/menuSupFundoMenus.jpg);
+  /*	border-width:1px;*/
+  width: 150px;
+  margin-top: 8px;
+  padding-bottom: 7px;
+  position: absolute;
+  left: 626px;
+  /*	left:545px;*/
+}
+
+#sddm li a {
+  display: block;
+  margin: 0px 0px 0px 0px;
+  width: 100px;
+  height: 10px;
+  font-family: Arial narrow;
+  font-size: 11px;
+  font-weight: bold;
+  color: #336600;
+  text-align: center;
+  text-decoration: none;
+}
+
+#sddm li a:hover {
+  /*	color: #336600;*/
+  color: #ffffff;
+  margin: 0;
+  /*	text-decoration:underline;*/
+}
+
+#sddm div {
+  position: absolute;
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  border: 0px solid #336600;
+}
+
+#sddm div a {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 5px 10px;
+  width: auto;
+  white-space: nowrap;
+  text-align: left;
+  text-decoration: none;
+  color: #336600;
+  font: bold 10px verdana;
+  padding-bottom: 5px;
+}
+
+#sddm div a:hover {
+  background: #336600;
+  color: #ffffff;
+  font: bold 10px verdana;
+}
+#geral #esquerda {
+  width: 170px;
+  float: left;
+}
+.td1 {
+  width: 170px;
+  height: 21px;
+  padding-top: 2px;
+  padding-left: 7px; /*valor anterior: 11px;*/
+  background-image: url(../images/menuEsq1.gif);
+  background-repeat: no-repeat;
+}
+.td2 {
+  width: 170px;
+  height: 21px;
+  padding-top: 2px;
+  padding-left: 7px; /*valor anterior: 11px;*/
+  background-image: url(../images/menuEsq2.gif);
+  background-repeat: no-repeat;
+}
+.td3 {
+  width: 170px;
+  height: 21px;
+  padding-top: 2px;
+  padding-left: 7px; /*valor anterior: 11px;*/
+  background-image: url(../images/menuEsq3.gif);
+  background-repeat: no-repeat;
+}
+.td4 {
+  width: 170px;
+  height: 21px;
+  padding-top: 2px;
+  padding-left: 7px; /*valor anterior: 11px;*/
+  background-image: url(../images/menuEsq4.gif);
+  background-repeat: no-repeat;
+}
+.td5 {
+  width: 170px;
+  height: 21px;
+  padding-top: 2px;
+  padding-left: 7px; /*valor anterior: 11px;*/
+  background-image: url(../images/menuEsq5.gif);
+  background-repeat: no-repeat;
+}
+#geral #esquerda #flash {
+  margin-left: 20px;
+}
+a:link {
+  color: #336600;
+  text-decoration: none;
+}
+a:visited {
+  color: #336600;
+  text-decoration: none;
+}
+a:hover {
+  color: #008000;
+  text-decoration: underline;
+}
+a:active {
+  color: #ae8d5d;
+  text-decoration: none;
+}
+h2 {
+  color: #336600;
+  font-family: Verdana;
+  font-size: 18px;
+  font-style: bold;
+  margin-top: 5px;
+  margin-bottom: -1px;
+  font-style: italic;
+}
+h3 {
+  color: #336600;
+  font-family: Verdana;
+  font-size: 14px;
+  font-style: bold;
+  margin-top: -3px;
+}
+#geral #centro #noticias {
+  padding-top: -20px;
+}
+body {
+  background-color: #668e60;
+  background-image: url(../images/ufrgsfundo.jpg);
+  margin-left: 1px;
+  color: #000000;
+  margin-top: 1px;
+  margin-right: 1px;
+  margin-bottom: 1px;
+  font: 10px verdana;
+}
+#geral #centro {
+  /*	border: #CEEDB8 1px solid;*/
+  /*	width: 600px;*/
+  width: 580px;
+  float: left;
+  /*	margin-right: 30px;*/
+  margin-right: 10px;
+  text-align: justify;
+  padding-bottom: 20px;
+}
+#geral #centroespecial {
+  /*	border: #CEEDB8 1px solid;*/
+  width: 425px;
+  float: left;
+  margin-right: 30px;
+  text-align: justify;
+}
+#geral #centroecommerce {
+  /*	border: #CEEDB8 1px solid;*/
+  /*	width: 600px;*/
+  width: 580px;
+  float: left;
+  /*	margin-right: 30px;*/
+  margin-right: 10px;
+  text-align: justify;
+}
+#geral #centroespecial #mural {
+  /*width: 380px;*/
+  width: 430px;
+  height: 300px;
+  border: #ceedb8 1px solid;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+#geral #centroecommerce #mural {
+  /*width: 380px;*/
+  /*	width: 600px;*/
+  width: 580px;
+  height: 350px;
+  border: #ceedb8 1px solid;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+#geral #centroprojeto {
+  /*border: #CEEDB8 1px solid;*/
+  width: 570px;
+  float: left;
+  margin-right: 30px;
+  text-align: justify;
+}
+#geral #links {
+  width: 120px;
+  text-align: center;
+  /*border: #CEEDB8 1px solid;*/
+  float: left;
+}
+/* :::::::::::::::::: in�cio da css para a Intranet ::::::::::::::::::::::: */
+#geral #centroespecial #centroLogin {
+  width: 200px;
+  margin-left: 100px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border: solid 1px #003300;
+  background-color: #c0dec7;
+}
+/* ::::::::::::::::::::: fim da css para a Intranet ::::::::::::::::::::::: */
+#geral #rodape {
+  background-image: url(../images/rodape.jpg);
+  background-repeat: repeat-x;
+  left: 0px;
+  width: 1040px;
+  /*	width:765px;*/
+  height: 17px;
+  color: #336600;
+  float: none;
+  clear: both;
+  padding-top: 5px;
+  padding-left: 5px;
+  margin-top: -5px;
+}
