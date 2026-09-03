@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../config/Env.php';
 loadEnv(__DIR__ . '/../../.env_');
 
@@ -29,8 +30,9 @@ class Mailer
   public function send(string $to, string $subject, string $message): bool
   {
     try {
-      // Load local PHPMailer classes (project ships them under PHPMailer/)
+      // Load local PHPMailer classes
       $base = __DIR__ . '/PHPMailer';
+
       require_once $base . '/Exception.php';
       require_once $base . '/PHPMailer.php';
       require_once $base . '/SMTP.php';
@@ -39,42 +41,124 @@ class Mailer
 
       if (!empty($this->config['smtp'])) {
         $mail->isSMTP();
-        $mail->SMTPDebug = 0;
+
+        /*
+                 * ==========================================================
+                 * DEBUG SMTP TEMPORÁRIO
+                 * ==========================================================
+                 *
+                 * O PHPMailer enviará todas as mensagens de diagnóstico
+                 * para o Logger do sistema, sem imprimir nada na tela.
+                 */
+
+        $mail->SMTPDebug = 3;
+
+        $mail->Debugoutput = function ($str, $level) {
+          Logger::error(
+            "PHPMailer SMTP DEBUG | Nivel: {$level} | {$str}"
+          );
+        };
+
+        /*
+                 * ==========================================================
+                 * CONFIGURAÇÃO SMTP
+                 * ==========================================================
+                 */
+
         $mail->Host = $this->config['smtp_host'];
         $mail->Port = (int)$this->config['smtp_port'];
         $mail->SMTPAutoTLS = true;
         $mail->SMTPSecure = $this->config['smtp_secure'];
         $mail->SMTPAuth = (bool)$this->config['smtp_auth'];
+
         if ($mail->SMTPAuth) {
           $mail->Username = $this->config['smtp_user'];
           $mail->Password = $this->config['smtp_pass'];
         }
-        // Allow passing custom SMTPOptions (stream context) if needed
-        if (!empty($this->config['smtp_options']) && is_array($this->config['smtp_options'])) {
+
+        /*
+                 * Permite passar opções customizadas de SMTP
+                 */
+        if (
+          !empty($this->config['smtp_options']) &&
+          is_array($this->config['smtp_options'])
+        ) {
           $mail->SMTPOptions = $this->config['smtp_options'];
         }
       }
 
-      $mail->setFrom($this->config['from_address'], $this->config['from_name']);
+      /*
+             * ==========================================================
+             * CONFIGURAÇÃO DO E-MAIL
+             * ==========================================================
+             */
+
+      $mail->setFrom(
+        $this->config['from_address'],
+        $this->config['from_name']
+      );
+
       $mail->addAddress($to);
       $mail->Subject = $subject;
-      $mail->isHTML(stripos($this->config['content_type'], 'html') !== false);
+
+      $mail->isHTML(
+        stripos(
+          $this->config['content_type'],
+          'html'
+        ) !== false
+      );
+
       $mail->Body = $message;
       $mail->AltBody = strip_tags($message);
       $mail->CharSet = 'UTF-8';
       $mail->Encoding = 'base64';
       $mail->Timeout = 30;
 
+      /*
+             * ==========================================================
+             * LOG DA CONFIGURAÇÃO (SEM SENHA)
+             * ==========================================================
+             */
+
+      Logger::info(
+        "Tentando enviar e-mail | " .
+          "Para: {$to} | " .
+          "Assunto: {$subject} | " .
+          "SMTP: {$this->config['smtp_host']}:{$this->config['smtp_port']} | " .
+          "Encryption: {$this->config['smtp_secure']}"
+      );
+
+      /*
+             * ==========================================================
+             * ENVIO
+             * ==========================================================
+             */
+
       $mail->send();
 
-      Logger::info("Email enviado com sucesso | Para: {$to} | Assunto: {$subject}");
+      Logger::info(
+        "Email enviado com sucesso | Para: {$to} | Assunto: {$subject}"
+      );
 
       return true;
     } catch (PHPMailerException $e) {
-      Logger::error("Mail Exception | Para: {$to} | Assunto: {$subject} | Erro: {$e->getMessage()}");
+      Logger::error(
+        "Mail Exception | " .
+          "Para: {$to} | " .
+          "Assunto: {$subject} | " .
+          "Erro: {$e->getMessage()} | " .
+          "SMTP Error: {$mail->ErrorInfo}"
+      );
+
       return false;
     } catch (\Throwable $e) {
-      Logger::error("Mail Exception | Para: {$to} | Assunto: {$subject} | Erro: {$e->getMessage()}");
+      Logger::error(
+        "Mail Exception | " .
+          "Para: {$to} | " .
+          "Assunto: {$subject} | " .
+          "Erro: {$e->getMessage()}"
+      );
+
       return false;
     }
   }
