@@ -1,0 +1,30 @@
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+.env_
+*.local
+
+# Dependências e caches
+/vendor/
+/node_modules/
+.cache/
+.phpunit.cache/
+
+# Arquivos gerados pela aplicação
+/uploads/*
+!/uploads/.gitkeep
+*.log
+
+# Arquivos temporários e de sistema
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.temp
+*.swp
+*~
+
+# Configurações locais de editores/IDE
+.vscode/
+.idea/
