@@ -17,7 +17,7 @@ class Mailer
       'from_name' => env('MAIL_FROM_NAME'),
       'content_type' => 'text/html; charset=UTF-8',
       'smtp' => true,
-      'smtp_host' => env('MAIL_HOST', 'smtp.gmail.com'),
+      'smtp_host' => env('MAIL_HOST', 'smtp.ufrgs.br'),
       'smtp_port' => (int)env('MAIL_PORT', 587),
       'smtp_secure' => env('MAIL_ENCRYPTION', 'tls'),
       'smtp_auth' => true,
